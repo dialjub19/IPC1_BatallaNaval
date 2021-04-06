@@ -26,20 +26,21 @@ public class Menu {
     }
 
     public void menuPrincipal() {
-        System.out.println("^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-");
-        System.out.println("-^-^-^-^-^-^-^-^-^-^ BIENVENIDO A LA BATALLA NAVAL ^-^-^-^-^-^-^-^-^-^");
-        System.out.println("1.Jugar.");
-        System.out.println("2.Historial de partidas.");
-        System.out.println("3.Mostrar puntuaciones más altas.");
-        System.out.println("4.Mostrar jugadores con mayor cantidad de fallos.");
-        System.out.println("5.Mostrar jugadores con mayor cantidad de aciertos.");
-        System.out.println("6.Mostrar Top 3 de Jugadores que más han ganado.");
-        System.out.println("7.Mostrar información de estudiante.");
-        System.out.println("8.Salir");
-        System.out.println("^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-");
-        Scanner entrada = new Scanner(System.in);
         int opcion = 0;
         do {
+            System.out.println("^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-");
+            System.out.println("-^-^-^-^-^-^-^-^-^-^ BIENVENIDO A LA BATALLA NAVAL ^-^-^-^-^-^-^-^-^-^");
+            System.out.println("1.Jugar.");
+            System.out.println("2.Historial de partidas.");
+            System.out.println("3.Mostrar puntuaciones más altas.");
+            System.out.println("4.Mostrar jugadores con mayor cantidad de fallos.");
+            System.out.println("5.Mostrar jugadores con mayor cantidad de aciertos.");
+            System.out.println("6.Mostrar Top 3 de Jugadores que más han ganado.");
+            System.out.println("7.Mostrar información de estudiante.");
+            System.out.println("8.Salir");
+            System.out.println("^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-^-");
+            Scanner entrada = new Scanner(System.in);
+
             System.out.println("Ingrese una opcion : ");
             opcion = entrada.nextInt();
             switch (opcion) {
@@ -102,9 +103,10 @@ public class Menu {
 
         dibujarMatriz(tablero1);
         asignarBarcos(tablero1, jugadorUno[this.contadorJugador]);
-        asignarBarcos(tablero2, jugadorDos[this.contadorJugador]);
+        System.out.println("¡ Asignacion de Barcos exitosa !");
+        //asignarBarcos(tablero2, jugadorDos[this.contadorJugador]);
         this.contadorJugador++;
-        
+
         System.out.println("fin");
 
     }
@@ -113,138 +115,213 @@ public class Menu {
 
         Scanner entrada = new Scanner(System.in);
         int barco = 1;
+        int numeroBarco = 1;
         boolean bandera = false;
 
         while (bandera == false) {
             if (barco == 1) {
 
-                System.out.println("Jugador " + jugador.getNombre() + " coloque 1 barco de 4 casillas ");
+                System.out.println("\nJugador " + jugador.getNombre() + " coloque 1 barco de 4 casillas ");
                 System.out.println("Ingrese la Letra de la fila inicial ");
                 String x1 = entrada.nextLine();
                 int xInicio = caracter(x1);
                 System.out.println("Ingrese el numero de la columna inicial ");
-                int yInicio = entrada.nextInt();
+                int y1 = entrada.nextInt();
+                int yInicio = numero(y1);
                 entrada.nextLine();
                 System.out.println("Ingrese la letra de la fila final ");
                 String x2 = entrada.nextLine();
                 int xFinal = caracter(x2);
                 System.out.println("Ingrese el numero de la columna final ");
-                int yFinal = entrada.nextInt();
+                int y2 = entrada.nextInt();
+                int yFinal = numero(y2);
                 entrada.nextLine();
+                int numeroCasilla = 0;
 
                 for (int i = xInicio; i <= xFinal; i++) {
                     for (int j = yInicio; j <= yFinal; j++) {
-                        if (!tablero[i][j].equals("■")) {
+                        numeroCasilla++;
+                        if (numeroCasilla <= 4) {
                             tablero[i][j] = "■";
+                        } else {
+                            System.out.println("¡ Barco excedio el tamaño, vuelva a ingresar las coordenadas !");
+                            break;
                         }
                     }
                 }
-                System.out.println("¡ Barco ubicado exitosamente !");
-                ubicarBarco(tablero);
-                barco++;
+
+                if (numeroCasilla == 4) {
+                    ubicarBarco(tablero);
+                    System.out.println("\n¡ Barco ubicado exitosamente !");
+                    barco++;
+                } else {
+                    bandera = false;
+                    limpiarTablero(xInicio, xFinal, yInicio, yFinal, tablero);
+                }
 
             } else if (barco == 2) {
 
-                System.out.println("Jugador " + jugador.getNombre() + " coloque 2 barcos de 3 casillas ");
+                System.out.println("\nJugador " + jugador.getNombre() + " coloque 2 barcos de 3 casillas ");
                 System.out.println("Ingrese la Letra de la fila inicial ");
                 String x1 = entrada.nextLine();
                 int xInicio = caracter(x1);
                 System.out.println("Ingrese el numero de la columna inicial ");
-                int yInicio = entrada.nextInt();
+                int y1 = entrada.nextInt();
+                int yInicio = numero(y1);
                 entrada.nextLine();
                 System.out.println("Ingrese la letra de la fila final ");
                 String x2 = entrada.nextLine();
                 int xFinal = caracter(x2);
                 System.out.println("Ingrese el numero de la columna final ");
-                int yFinal = entrada.nextInt();
+                int y2 = entrada.nextInt();
+                int yFinal = numero(y2);
                 entrada.nextLine();
-                int contador = 1;
+                int numeroCasilla = 0;
 
                 for (int i = xInicio; i <= xFinal; i++) {
                     for (int j = yInicio; j <= yFinal; j++) {
-                        if (!tablero[i][j].equals("■")) {
-                            tablero[i][j] = "■";
-                            contador++;
+                        numeroCasilla++;
+                        if (numeroCasilla <= 3) {
+                            if (!tablero[i][j].equals("■")) {
+                                tablero[i][j] = "■";
+                            } else {
+                                System.out.println("¡ Casilla ocupada, vuelva a intentarlo !");
+                                break;
+                            }
                         } else {
-                            System.out.println("ocupado, vuelva a intentarlo");
-                            bandera = false;
+                            System.out.println("¡ Barco excedio el tamaño, vuelva a ingresar las coordenadas !");
+                            break;
                         }
+
                     }
                 }
-                System.out.println("¡ Barco ubicado exitosamente !");
-                ubicarBarco(tablero);
-                if (contador == 2) {
-                    barco++;
+                numeroBarco++;
+
+                if (numeroCasilla == 3) {
+                    ubicarBarco(tablero);
+                    System.out.println("\n¡ Barco ubicado exitosamente !");
+                    if (numeroBarco == 3) {
+                        barco++;
+                    }
+                } else {
+                    numeroBarco--;
+                    bandera = false;
+                    limpiarTablero(xInicio, xFinal, yInicio, yFinal, tablero);
                 }
+
             } else if (barco == 3) {
 
-                System.out.println("Jugador " + jugador.getNombre() + " coloque 3 barcos de 2 casillas ");
+                System.out.println("\nJugador " + jugador.getNombre() + " coloque 3 barcos de 2 casillas ");
                 System.out.println("Ingrese la Letra de la fila inicial ");
                 String x1 = entrada.nextLine();
                 int xInicio = caracter(x1);
                 System.out.println("Ingrese el numero de la columna inicial ");
-                int yInicio = entrada.nextInt();
+                int y1 = entrada.nextInt();
+                int yInicio = numero(y1);
                 entrada.nextLine();
                 System.out.println("Ingrese la letra de la fila final ");
                 String x2 = entrada.nextLine();
                 int xFinal = caracter(x2);
                 System.out.println("Ingrese el numero de la columna final ");
-                int yFinal = entrada.nextInt();
+                int y2 = entrada.nextInt();
+                int yFinal = numero(y2);
                 entrada.nextLine();
-                int contador = 1;
+                int numeroCasilla = 0;
 
                 for (int i = xInicio; i <= xFinal; i++) {
                     for (int j = yInicio; j <= yFinal; j++) {
-                        if (!tablero[i][j].equals("■")) {
-                            tablero[i][j] = "■";
-                            contador++;
+                        numeroCasilla++;
+                        if (numeroCasilla <= 2) {
+                            if (!tablero[i][j].equals("■")) {
+                                tablero[i][j] = "■";
+                            } else {
+                                System.out.println("¡ Casilla ocupada, vuelva a intentarlo !");
+                                break;
+                            }
                         } else {
-                            System.out.println("ocupado, vuelva a intentarlo");
-                            bandera = false;
+                            System.out.println("¡ Barco excedio el tamaño, vuelva a ingresar las coordenadas !");
+                            break;
                         }
                     }
                 }
-                System.out.println("¡ Barco ubicado exitosamente !");
-                ubicarBarco(tablero);
-                if (contador == 3) {
-                    barco++;
+                numeroBarco++;
+
+                if (numeroCasilla == 2) {
+                    ubicarBarco(tablero);
+                    System.out.println("\n¡ Barco ubicado exitosamente !");
+                    if (numeroBarco == 6) {
+                        barco++;
+                    }
+                } else {
+                    numeroBarco--;
+                    bandera = false;
+                    limpiarTablero(xInicio, xFinal, yInicio, yFinal, tablero);
                 }
 
             } else if (barco == 4) {
 
-                System.out.println("Jugador " + jugador.getNombre() + " coloque 4 barcos de 1 casillas ");
-                System.out.println("Ingrese la Letra de la fila inicial ");
+                System.out.println("\nJugador " + jugador.getNombre() + " coloque 4 barcos de 1 casillas ");
+                System.out.println("Ingrese la Letra de la fila  ");
                 String x1 = entrada.nextLine();
                 int xInicio = caracter(x1);
-                System.out.println("Ingrese el numero de la columna inicial ");
-                int yInicio = entrada.nextInt();
+                System.out.println("Ingrese el numero de la columna  ");
+                int y1 = entrada.nextInt();
+                int yInicio = numero(y1);
                 entrada.nextLine();
-                System.out.println("Ingrese la letra de la fila final ");
-                String x2 = entrada.nextLine();
-                int xFinal = caracter(x2);
-                System.out.println("Ingrese el numero de la columna final ");
-                int yFinal = entrada.nextInt();
-                entrada.nextLine();
-                int contador = 1;
+                int numeroCasilla = 0;
 
-                for (int i = xInicio; i <= xFinal; i++) {
-                    for (int j = yInicio; j <= yFinal; j++) {
-                        if (!tablero[i][j].equals("■")) {
-                            tablero[i][j] = "■";
-                            contador++;
+                for (int i = xInicio; i <= xInicio; i++) {
+                    for (int j = yInicio; j <= yInicio; j++) {
+                        numeroCasilla++;
+                        if (numeroCasilla == 1) {
+                            if (!tablero[i][j].equals("■")) {
+                                tablero[i][j] = "■";
+                            } else {
+                                System.out.println("¡ Casilla ocupada, vuelva a intentarlo !");
+                                break;
+                            }
                         } else {
-                            System.out.println("ocupado, vuelva a intentarlo");
-                            bandera = false;
+                            System.out.println("¡ Barco excedio el tamaño, vuelva a ingresar las coordenadas !");
+                            break;
                         }
                     }
                 }
-                System.out.println("¡ Barco ubicado exitosamente !");
-                ubicarBarco(tablero);
-                if (contador == 4) {
-                    break;
+                numeroBarco++;
+
+                if (numeroCasilla == 1) {
+                    ubicarBarco(tablero);
+                    System.out.println("\n¡ Barco ubicado exitosamente !");
+                    if (numeroBarco == 10) {
+                        bandera = true;
+                    }
+                } else {
+                    numeroBarco--;
+                    bandera = false;
+                    limpiarTablero(xInicio, xInicio, yInicio, yInicio, tablero);
                 }
             }
         }
+    }
+
+    private int validarNumero() {
+
+        Scanner entrada = new Scanner(System.in);
+
+        int dato = entrada.nextInt();
+        while (dato < 0 || dato > 26) {
+            dato = entrada.nextInt();
+        }
+        return dato;
+    }
+
+    private void limpiarTablero(int xInicio, int xFinal, int yInicio, int yFinal, String[][] tablero) {
+
+        for (int i = xInicio; i <= xFinal; i++) {
+            for (int j = yInicio; j <= yFinal; j++) {
+                tablero[i][j] = "-";
+            }
+        }
+
     }
 
     private void ubicarBarco(String[][] tablero) {
@@ -306,39 +383,100 @@ public class Menu {
             case "I":
                 return 8;
             case "J":
-                return 8;
-            case "K":
                 return 9;
-            case "L":
+            case "K":
                 return 10;
-            case "M":
+            case "L":
                 return 11;
-            case "N":
+            case "M":
                 return 12;
-            case "O":
+            case "N":
                 return 13;
-            case "P":
+            case "O":
                 return 14;
-            case "Q":
+            case "P":
                 return 15;
-            case "R":
+            case "Q":
                 return 16;
-            case "S":
+            case "R":
                 return 17;
-            case "T":
+            case "S":
                 return 18;
-            case "U":
+            case "T":
                 return 19;
-            case "V":
+            case "U":
                 return 20;
-            case "W":
+            case "V":
                 return 21;
-            case "X":
+            case "W":
                 return 22;
-            case "Y":
+            case "X":
                 return 23;
-            case "Z":
+            case "Y":
                 return 24;
+            case "Z":
+                return 25;
+            default:
+                System.out.println("Incorrecto, dato no existe...");
+        }
+        return 0;
+    }
+
+    private int numero(int numero) {
+
+        switch (numero) {
+            case 1:
+                return 0;
+            case 2:
+                return 1;
+            case 3:
+                return 2;
+            case 4:
+                return 3;
+            case 5:
+                return 4;
+            case 6:
+                return 5;
+            case 7:
+                return 6;
+            case 8:
+                return 7;
+            case 9:
+                return 8;
+            case 10:
+                return 9;
+            case 11:
+                return 10;
+            case 12:
+                return 11;
+            case 13:
+                return 12;
+            case 14:
+                return 13;
+            case 15:
+                return 14;
+            case 16:
+                return 15;
+            case 17:
+                return 16;
+            case 18:
+                return 17;
+            case 19:
+                return 18;
+            case 20:
+                return 19;
+            case 21:
+                return 20;
+            case 22:
+                return 21;
+            case 23:
+                return 22;
+            case 24:
+                return 23;
+            case 25:
+                return 24;
+            case 26:
+                return 25;
             default:
                 System.out.println("Incorrecto, dato no existe...");
         }
@@ -346,13 +484,15 @@ public class Menu {
     }
 
     private void datos() {
-        System.out.println("Diego Alejandro Juarez Bran.");
+        System.out.println("\nDiego Alejandro Juarez Bran.");
         System.out.println("201700770.");
         System.out.println("IPC1-C.");
-        System.out.println("Ing. Moises Velasquez.");
+        System.out.println("Ing. Moises Velasquez.\n");
     }
 
     private void salir() {
+        System.out.println("Gracias por jugar Batalla Naval, hasta pronto.....");
         System.exit(0);
     }
+
 }
