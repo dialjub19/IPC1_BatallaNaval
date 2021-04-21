@@ -18,6 +18,9 @@ public class Menu {
     public static Jugador[] jugadorUno;
     public static Jugador[] jugadorDos;
     private int contadorJugador;
+    private final String formatear = "\033[37m";
+    private final String azul = "\033[34m";
+    private final String rojo = "\033[31m";
 
     public Menu() {
         this.jugadorUno = new Jugador[100];
@@ -74,6 +77,7 @@ public class Menu {
     private void jugar() {
 
         Scanner entrada = new Scanner(System.in);
+        int numeroAleatorio = (int) (Math.random() * (2));
         int tamanioMatriz = 0;
 
         try {
@@ -103,11 +107,21 @@ public class Menu {
 
         dibujarMatriz(tablero1);
         asignarBarcos(tablero1, jugadorUno[this.contadorJugador]);
-        System.out.println("¡ Asignacion de Barcos exitosa !");
-        //asignarBarcos(tablero2, jugadorDos[this.contadorJugador]);
+        System.out.println("\n ¡ Asignacion de Barcos exitosa !");
+        /*asignarBarcos(tablero2, jugadorDos[this.contadorJugador]);
+        System.out.println("\n ¡ Asignacion de Barcos exitosa !");*/
+
+        Jugador uno = jugadorUno[this.contadorJugador];
+        Jugador dos = jugadorDos[this.contadorJugador];
+
         this.contadorJugador++;
 
-        System.out.println("fin");
+        batallaNaval(uno, dos, tamanioMatriz, tablero1, tablero2);
+        /*if (numeroAleatorio == 1) {
+            batallaNaval(uno, dos, tamanioMatriz, tablero1, tablero2);
+        } else {
+            batallaNaval(dos, uno, tamanioMatriz, tablero2, tablero1);
+        }*/
 
     }
 
@@ -303,6 +317,67 @@ public class Menu {
         }
     }
 
+    private void batallaNaval(Jugador uno, Jugador dos, int tamanioMatriz, String[][] tablero1, String[][] tablero2) {
+
+        Scanner entrada = new Scanner(System.in);
+        String[][] aux1 = new String[tamanioMatriz][tamanioMatriz];
+        String[][] aux2 = new String[tamanioMatriz][tamanioMatriz];
+        boolean fin = true;
+        int contadorFalloUno = 0;
+        int contadorAciertoUno = 0;
+        int barcoDestruidoUno = 10;
+        int contadorFalloDos = 0;
+        int contadorAciertoDos = 0;
+        int barcoDestruidoDos = 10;
+        int vidaUno = uno.getVida();
+        int vidaDos = dos.getVida();
+
+        while (fin == true) {
+
+            System.out.println("°°°°°°°°°°°°°°°°°°°°°°°°°°°°BATALLA NAVAL INICIADA°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n");
+            System.out.println(" ¡ Jugador " + uno.getNombre() + " ingrese la fila a atacar !");
+            String x1 = entrada.nextLine();
+            int xInicio = caracter(x1);
+            System.out.println(" ¡ Jugador " + uno.getNombre() + " ingrese la columna a atacar !");
+            int y1 = entrada.nextInt();
+            int yInicio = numero(y1);
+            entrada.nextLine();
+
+            System.out.println("Jugador 1 " + uno.getNombre());
+            System.out.println("Puntos : " + uno.getVida());
+            System.out.println("Aciertos : " + contadorAciertoUno);
+            System.out.println("Fallos : " + contadorFalloUno);
+            ubicarBarco(tablero1);
+            tableroDanio(aux2);
+
+            for (int i = xInicio; i <= xInicio; i++) {
+                for (int j = yInicio; j <= yInicio; j++) {
+                    if (tablero2[i][j].equals("■")) {
+                        aux2[i][j] = azul + "X";
+                        System.out.println("¡ Ataque Realizado exitosamente !");
+                        vidaUno = vidaUno + 50;
+                        uno.setVida(vidaUno);
+                        contadorAciertoUno++;
+                        barcoDestruidoUno--;
+                    } else {
+                        aux2[i][j] = rojo + "O";
+                        System.out.println("¡ Ataque no fue exitoso, vuelva a intentarlo !");
+                        vidaUno = vidaUno - 5;
+                        uno.setVida(vidaUno);
+                        contadorFalloUno++;
+                    }
+                }
+            }
+
+            if (barcoDestruidoUno == 0) {
+                System.out.println("¡ Felicidades " + uno + " a ganado la batalla naval !");
+                fin = false;
+            }
+
+        }
+
+    }
+
     private int validarNumero() {
 
         Scanner entrada = new Scanner(System.in);
@@ -322,6 +397,27 @@ public class Menu {
             }
         }
 
+    }
+
+    private void tableroDanio(String[][] tablero) {
+
+        if (tablero == null) {
+                 dibujarMatriz(tablero);
+        } else {
+            System.out.print(" ");
+            for (int i = 0; i < tablero.length; i++) {
+                System.out.print((i + 1) + " ");
+            }
+
+            System.out.print("  ");
+            for (int i = 0; i < tablero.length; i++) {
+                System.out.print((char) (i + 65) + " ");
+                for (int j = 0; j < tablero.length; j++) {
+                    System.out.print(tablero[i][j] + " ");
+                }
+                System.out.println("");
+            }
+        }
     }
 
     private void ubicarBarco(String[][] tablero) {
