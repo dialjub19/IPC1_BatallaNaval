@@ -28,7 +28,7 @@ public class Jugador {
     public Jugador() {
         setNombre("");
         setVida(200);
-        setAcierto(-1);
+        setAcierto(0);
         setFallo(0);
         setEstado("");
                 

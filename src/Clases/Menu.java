@@ -99,7 +99,7 @@ public class Menu {
         entrada.nextLine();
         System.out.println("Ingrese en nombre del Jugador 1 : ");
         String jugador1 = entrada.nextLine().trim();
-        System.out.println("Ingrese en nombre del Jugador 2 : ");
+        System.out.println("Ingrese en nombre del Jugador 2 : \n");
         String jugador2 = entrada.nextLine().trim();
 
         jugadorUno[this.contadorJugador] = new Jugador(jugador1, 200, 0, 0, "");
@@ -108,20 +108,20 @@ public class Menu {
         dibujarMatriz(tablero1);
         asignarBarcos(tablero1, jugadorUno[this.contadorJugador]);
         System.out.println("\n ¡ Asignacion de Barcos exitosa !");
-        /*asignarBarcos(tablero2, jugadorDos[this.contadorJugador]);
-        System.out.println("\n ¡ Asignacion de Barcos exitosa !");*/
+        dibujarMatriz(tablero2);
+        asignarBarcos(tablero2, jugadorDos[this.contadorJugador]);
+        System.out.println("\n ¡ Asignacion de Barcos exitosa !");
 
         Jugador uno = jugadorUno[this.contadorJugador];
         Jugador dos = jugadorDos[this.contadorJugador];
 
         this.contadorJugador++;
 
-        batallaNaval(uno, dos, tamanioMatriz, tablero1, tablero2);
-        /*if (numeroAleatorio == 1) {
+        if (numeroAleatorio == 1) {
             batallaNaval(uno, dos, tamanioMatriz, tablero1, tablero2);
         } else {
             batallaNaval(dos, uno, tamanioMatriz, tablero2, tablero1);
-        }*/
+        }
 
     }
 
@@ -135,16 +135,17 @@ public class Menu {
         while (bandera == false) {
             if (barco == 1) {
 
+                System.out.println("------------------- ASIGNACION DE BARCOS --------------------------");
                 System.out.println("\nJugador " + jugador.getNombre() + " coloque 1 barco de 4 casillas ");
                 System.out.println("Ingrese la Letra de la fila inicial ");
-                String x1 = entrada.nextLine();
+                String x1 = entrada.nextLine().trim();
                 int xInicio = caracter(x1);
                 System.out.println("Ingrese el numero de la columna inicial ");
                 int y1 = entrada.nextInt();
                 int yInicio = numero(y1);
                 entrada.nextLine();
                 System.out.println("Ingrese la letra de la fila final ");
-                String x2 = entrada.nextLine();
+                String x2 = entrada.nextLine().trim();
                 int xFinal = caracter(x2);
                 System.out.println("Ingrese el numero de la columna final ");
                 int y2 = entrada.nextInt();
@@ -177,14 +178,14 @@ public class Menu {
 
                 System.out.println("\nJugador " + jugador.getNombre() + " coloque 2 barcos de 3 casillas ");
                 System.out.println("Ingrese la Letra de la fila inicial ");
-                String x1 = entrada.nextLine();
+                String x1 = entrada.nextLine().trim();
                 int xInicio = caracter(x1);
                 System.out.println("Ingrese el numero de la columna inicial ");
                 int y1 = entrada.nextInt();
                 int yInicio = numero(y1);
                 entrada.nextLine();
                 System.out.println("Ingrese la letra de la fila final ");
-                String x2 = entrada.nextLine();
+                String x2 = entrada.nextLine().trim();
                 int xFinal = caracter(x2);
                 System.out.println("Ingrese el numero de la columna final ");
                 int y2 = entrada.nextInt();
@@ -227,14 +228,14 @@ public class Menu {
 
                 System.out.println("\nJugador " + jugador.getNombre() + " coloque 3 barcos de 2 casillas ");
                 System.out.println("Ingrese la Letra de la fila inicial ");
-                String x1 = entrada.nextLine();
+                String x1 = entrada.nextLine().trim();
                 int xInicio = caracter(x1);
                 System.out.println("Ingrese el numero de la columna inicial ");
                 int y1 = entrada.nextInt();
                 int yInicio = numero(y1);
                 entrada.nextLine();
                 System.out.println("Ingrese la letra de la fila final ");
-                String x2 = entrada.nextLine();
+                String x2 = entrada.nextLine().trim();
                 int xFinal = caracter(x2);
                 System.out.println("Ingrese el numero de la columna final ");
                 int y2 = entrada.nextInt();
@@ -276,7 +277,7 @@ public class Menu {
 
                 System.out.println("\nJugador " + jugador.getNombre() + " coloque 4 barcos de 1 casillas ");
                 System.out.println("Ingrese la Letra de la fila  ");
-                String x1 = entrada.nextLine();
+                String x1 = entrada.nextLine().trim();
                 int xInicio = caracter(x1);
                 System.out.println("Ingrese el numero de la columna  ");
                 int y1 = entrada.nextInt();
@@ -335,36 +336,40 @@ public class Menu {
         while (fin == true) {
 
             System.out.println("°°°°°°°°°°°°°°°°°°°°°°°°°°°°BATALLA NAVAL INICIADA°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n");
-            System.out.println(" ¡ Jugador " + uno.getNombre() + " ingrese la fila a atacar !");
+            System.out.println("Jugador 1 " + uno.getNombre());
+            System.out.println("Puntos : " + uno.getVida());
+            System.out.println("Aciertos : " + uno.getAcierto());
+            System.out.println("Fallos : " + uno.getFallo());
+            ubicarBarco(tablero1);
+            dibujarMatriz(aux2);
+
+            System.out.println("Jugador " + uno.getNombre() + " ingrese la fila a atacar");
             String x1 = entrada.nextLine();
             int xInicio = caracter(x1);
-            System.out.println(" ¡ Jugador " + uno.getNombre() + " ingrese la columna a atacar !");
+            System.out.println("Jugador " + uno.getNombre() + " ingrese la columna a atacar");
             int y1 = entrada.nextInt();
             int yInicio = numero(y1);
             entrada.nextLine();
-
-            System.out.println("Jugador 1 " + uno.getNombre());
-            System.out.println("Puntos : " + uno.getVida());
-            System.out.println("Aciertos : " + contadorAciertoUno);
-            System.out.println("Fallos : " + contadorFalloUno);
-            ubicarBarco(tablero1);
-            tableroDanio(aux2);
 
             for (int i = xInicio; i <= xInicio; i++) {
                 for (int j = yInicio; j <= yInicio; j++) {
                     if (tablero2[i][j].equals("■")) {
                         aux2[i][j] = azul + "X";
+                        System.out.println(formatear);
                         System.out.println("¡ Ataque Realizado exitosamente !");
                         vidaUno = vidaUno + 50;
                         uno.setVida(vidaUno);
                         contadorAciertoUno++;
+                        uno.setAcierto(contadorAciertoUno);
                         barcoDestruidoUno--;
                     } else {
                         aux2[i][j] = rojo + "O";
+                        System.out.println(formatear);
                         System.out.println("¡ Ataque no fue exitoso, vuelva a intentarlo !");
                         vidaUno = vidaUno - 5;
                         uno.setVida(vidaUno);
                         contadorFalloUno++;
+                        uno.setFallo(contadorFalloUno);
                     }
                 }
             }
@@ -372,6 +377,7 @@ public class Menu {
             if (barcoDestruidoUno == 0) {
                 System.out.println("¡ Felicidades " + uno + " a ganado la batalla naval !");
                 fin = false;
+                break;
             }
 
         }
@@ -402,7 +408,7 @@ public class Menu {
     private void tableroDanio(String[][] tablero) {
 
         if (tablero == null) {
-                 dibujarMatriz(tablero);
+            dibujarMatriz(tablero);
         } else {
             System.out.print(" ");
             for (int i = 0; i < tablero.length; i++) {
@@ -449,8 +455,13 @@ public class Menu {
         for (int i = 0; i < tablero.length; i++) {
             System.out.print((char) (i + 65) + " ");
             for (int j = 0; j < tablero.length; j++) {
-                tablero[i][j] = "-";
-                System.out.print(tablero[i][j] + " ");
+                if (tablero[i][j] == null) {
+                    tablero[i][j] = "-";
+                    System.out.print(tablero[i][j] + " ");
+
+                } else {
+                    System.out.print(tablero[i][j] + " ");
+                }
             }
             System.out.println();
         }
