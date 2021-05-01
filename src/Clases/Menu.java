@@ -13,6 +13,7 @@ import java.util.Scanner;
  */
 public class Menu {
 
+    // Variables locales
     public static String[][] tablero1;
     public static String[][] tablero2;
     public static Jugador[] jugadorUno;
@@ -22,12 +23,15 @@ public class Menu {
     private final String azul = "\033[34m";
     private final String rojo = "\033[31m";
 
+    // Metodo constructor.
     public Menu() {
         this.jugadorUno = new Jugador[100];
         this.jugadorDos = new Jugador[100];
         this.contadorJugador = 0;
     }
 
+    
+    // Metodo con el cual se empieza la ejecucion del programa, este contiene el menu principal y dependiendo la opcion nos llevara a una accion determinada.
     public void menuPrincipal() {
         int opcion = 0;
         do {
@@ -51,14 +55,19 @@ public class Menu {
                     jugar();
                     break;
                 case 2:
+                    historialPartida();
                     break;
                 case 3:
+                    puntuacionAlta();
                     break;
                 case 4:
+                    mayorFallo();
                     break;
                 case 5:
+                    mayorAcierto();
                     break;
                 case 6:
+                    puntuacionAlta();
                     break;
                 case 7:
                     datos();
@@ -74,6 +83,163 @@ public class Menu {
         } while (opcion >= 1 && opcion <= 8);
     }
 
+    
+    /* Metodo que por medio del metodo burbuja ordena de forma ascendente y por medio de la puntuacion mas alta a los jugadores de cada
+    partida jugada para posteriomente mostrar a los mejores 3 jugadores.
+   */
+    private void puntuacionAlta() {
+
+        System.out.println("-.-.-.-.-.-.-.-..- REPORTE DE PUNTUACION MAS ALTA -.-.-.-.-.-.-.-..-");
+        if (jugadorUno[0] == null && jugadorDos[0] == null) {
+            System.out.println(" ¡ AUN NO HAY PARTIDAS JUGADAS !\n");
+        } else {
+            for (int i = 0; i < this.contadorJugador; i++) {
+                for (int j = 0; j < this.contadorJugador; j++) {
+                    if (jugadorUno[j].getVida() < jugadorUno[j + 1].getVida()) {
+                        int aux = jugadorUno[j].getVida();
+                        jugadorUno[j].setVida(jugadorUno[j + 1].getVida());
+                        jugadorUno[j + 1].setVida(aux);
+                    }
+
+                    if (jugadorDos[j].getVida() < jugadorDos[j + 1].getVida()) {
+                        int aux = jugadorDos[j].getVida();
+                        jugadorDos[j].setVida(jugadorDos[j + 1].getVida());
+                        jugadorDos[j + 1].setVida(aux);
+                    }
+
+                }
+            }
+
+            System.out.println("\n-.-.-.-.-.-.-.-..- MEJORES 3 JUGADORES -.-.-.-.-.-.-.-..-");
+            for (int i = 0; i < this.contadorJugador; i++) {
+                if (i < 3 && (jugadorUno[i].getEstado().equals("Ganador") || jugadorDos[i].getEstado().equals("Ganador"))) {
+                    if (jugadorUno[i].getEstado().equals("Ganador")) {
+                        System.out.println("Nombre : " + jugadorUno[i].getNombre());
+                        System.out.println("Puntos : " + jugadorUno[i].getVida());
+                    } else {
+                        System.out.println("Nombre : " + jugadorDos[i].getNombre());
+                        System.out.println("Puntos : " + jugadorDos[i].getVida());
+
+                    }
+                }
+            }
+        }
+    }
+
+    
+    /* Metodo que por medio del metodo burbuja ordena de forma ascendente y por medio del numero de fallos a los jugadores de cada
+    partida jugada para posteriomente mostrar a los primero 3 jugadores con mayores numero de fallos en cada partida.
+   */
+    private void mayorFallo() {
+
+        System.out.println("-.-.-.-.-.-.-.-..- REPORTE DE MAYOR CANTIDAD DE FALLOS -.-.-.-.-.-.-.-..-");
+        if (jugadorUno[0] == null && jugadorDos[0] == null) {
+            System.out.println(" ¡ AUN NO HAY PARTIDAS JUGADAS !\n");
+        } else {
+            for (int i = 0; i < this.contadorJugador; i++) {
+                for (int j = 0; j < this.contadorJugador; j++) {
+                    if (jugadorUno[j].getFallo() < jugadorUno[j + 1].getFallo()) {
+                        int aux = jugadorUno[j].getFallo();
+                        jugadorUno[j].setFallo(jugadorUno[j + 1].getFallo());
+                        jugadorUno[j + 1].setFallo(aux);
+                    }
+
+                    if (jugadorDos[j].getFallo() < jugadorDos[j + 1].getFallo()) {
+                        int aux = jugadorDos[j].getFallo();
+                        jugadorDos[j].setFallo(jugadorDos[j + 1].getFallo());
+                        jugadorDos[j + 1].setFallo(aux);
+                    }
+
+                }
+            }
+
+            System.out.println("\n-.-.-.-.-.-.-.-..- FALLO DE LOS 3 JUGADORES -.-.-.-.-.-.-.-..-");
+            for (int i = 0; i < this.contadorJugador; i++) {
+                if (i < 3 && (jugadorUno[i].getEstado().equals("Perdedor") || jugadorDos[i].getEstado().equals("Perdedor"))) {
+                    if (jugadorUno[i].getEstado().equals("Perdedor")) {
+                        System.out.println("Nombre : " + jugadorUno[i].getNombre());
+                        System.out.println("Puntos : " + jugadorUno[i].getFallo());
+                    } else {
+                        System.out.println("Nombre : " + jugadorDos[i].getNombre());
+                        System.out.println("Puntos : " + jugadorDos[i].getFallo());
+
+                    }
+                }
+            }
+        }
+    }
+
+    /* Metodo que por medio del metodo burbuja ordena de forma ascendente y por medio del numero de aciertos a los jugadores de cada
+    partida jugada para posteriomente mostrar a los primero 3 jugadores con mayores aciertos en cada partida.
+   */
+    private void mayorAcierto() {
+
+        System.out.println("-.-.-.-.-.-.-.-..- REPORTE DE MAYOR CANTIDAD DE ACIERTOS -.-.-.-.-.-.-.-..-");
+        if (jugadorUno[0] == null && jugadorDos[0] == null) {
+            System.out.println(" ¡ AUN NO HAY PARTIDAS JUGADAS !\n");
+        } else {
+            for (int i = 0; i < this.contadorJugador; i++) {
+                for (int j = 0; j < this.contadorJugador; j++) {
+                    if (jugadorUno[j].getAcierto() < jugadorUno[j + 1].getAcierto()) {
+                        int aux = jugadorUno[j].getAcierto();
+                        jugadorUno[j].setAcierto(jugadorUno[j + 1].getAcierto());
+                        jugadorUno[j + 1].setAcierto(aux);
+                    }
+
+                    if (jugadorDos[j].getAcierto() < jugadorDos[j + 1].getAcierto()) {
+                        int aux = jugadorDos[j].getAcierto();
+                        jugadorDos[j].setAcierto(jugadorDos[j + 1].getAcierto());
+                        jugadorDos[j + 1].setAcierto(aux);
+                    }
+
+                }
+            }
+
+            System.out.println("\n-.-.-.-.-.-.-.-..- ACIERTO DE LOS 3 JUGADORES -.-.-.-.-.-.-.-..-");
+            for (int i = 0; i < this.contadorJugador; i++) {
+                if (i < 3 && (jugadorUno[i].getEstado().equals("Ganador") || jugadorDos[i].getEstado().equals("Ganador"))) {
+                    if (jugadorUno[i].getEstado().equals("Ganador")) {
+                        System.out.println("Nombre : " + jugadorUno[i].getNombre());
+                        System.out.println("Puntos : " + jugadorUno[i].getAcierto());
+                    } else {
+                        System.out.println("Nombre : " + jugadorDos[i].getNombre());
+                        System.out.println("Puntos : " + jugadorDos[i].getAcierto());
+
+                    }
+                }
+            }
+        }
+    }
+
+    // Metodo utilizado para mostrar el historial de partidas que se realizaron durante la ejecucion del programa.
+    private void historialPartida() {
+
+        System.out.println("----------------------- HISTORIAL DE PARTIDAS REALIZADAS -----------------------");
+        if (jugadorUno[0] == null && jugadorDos[0] == null) {
+            System.out.println("¡ AUN NO HAY PARTIDAS JUGADAS !\n");
+        } else {
+            for (int i = 0; i < this.contadorJugador; i++) {
+                System.out.println("Partida #" + (i + 1));
+                System.out.println("Tamaño del Tablero : " + jugadorUno[i].getTamanioMatriz());
+                System.out.println("-.-.-.-.-.-.-. Jugador #1 -.-.-.-.-.-.-.");
+                System.out.println("Nombre : " + jugadorUno[i].getNombre());
+                System.out.println("Puntos : " + jugadorUno[i].getVida());
+                System.out.println("Aciertos : " + jugadorUno[i].getAcierto());
+                System.out.println("Fallos : " + jugadorUno[i].getFallo());
+                System.out.println(" " + jugadorUno[i].getEstado());
+                System.out.println("-.-.-.-.-.-.-. Jugador #2 -.-.-.-.-.-.-.");
+                System.out.println("Nombre : " + jugadorDos[i].getNombre());
+                System.out.println("Puntos : " + jugadorDos[i].getVida());
+                System.out.println("Aciertos : " + jugadorDos[i].getAcierto());
+                System.out.println("Fallos : " + jugadorDos[i].getFallo());
+                System.out.println(" " + jugadorDos[i].getEstado());
+            }
+        }
+    }
+
+    /* Metodo en el cual al iniciar el juego se solicita el tamaño del trablero asi como los nombre de cada jugador que ira a participar 
+    en la batalla, posteriormente se asignaran los barcos y por el ultimo aleatoreamente se eligira al jugado el cual atacara primero.
+     */
     private void jugar() {
 
         Scanner entrada = new Scanner(System.in);
@@ -102,8 +268,8 @@ public class Menu {
         System.out.println("Ingrese en nombre del Jugador 2 : \n");
         String jugador2 = entrada.nextLine().trim();
 
-        jugadorUno[this.contadorJugador] = new Jugador(jugador1, 200, 0, 0, "");
-        jugadorDos[this.contadorJugador] = new Jugador(jugador2, 200, 0, 0, "");
+        jugadorUno[this.contadorJugador] = new Jugador(jugador1, 200, 0, 0, "", tamanioMatriz);
+        jugadorDos[this.contadorJugador] = new Jugador(jugador2, 200, 0, 0, "", tamanioMatriz);
 
         dibujarMatriz(tablero1);
         asignarBarcos(tablero1, jugadorUno[this.contadorJugador]);
@@ -125,6 +291,11 @@ public class Menu {
 
     }
 
+    /* Metodo utilizado para implementar toda la logica al asignar los barcos en el tablero, se lleva un contador de casillas el cual se aumenta
+    cada vez que un barco es asignado exitosamente en caso contrario solo se pide de nuevo las coordenadas hasta que sean correctas, tenemos un contador 
+    barco el cual nos sirve para llevar un control de que tamaño de barco es el que debemos ubicar y por ultimo todo esta dentro de un bucle while 
+    el cual se ejecutara hasta que se ubique el ultimo barco.
+   */
     private void asignarBarcos(String[][] tablero, Jugador jugador) {
 
         Scanner entrada = new Scanner(System.in);
@@ -318,6 +489,11 @@ public class Menu {
         }
     }
 
+    /* Metodo que contiene toda la logica del programa, en esta parte del codigo el jugador podra realizar los ataques al jugador
+    contrario, se implemento un contador para saber cuando unos de los dos jugadores destruyo todos los barcos del jugador contrario,
+    se utilizaron 2 tableros auxiliares los cuales su funcion es solo reflejar por medio de una "X" o "O" si el disparo fue acertado o si fallo respectivamente,
+    asi mismo se tienen varios contadores para los aciertos, fallos y la vida de cada jugador esto nos ayudara para los reportes que se solicitan.
+    */
     private void batallaNaval(Jugador uno, Jugador dos, int tamanioMatriz, String[][] tablero1, String[][] tablero2) {
 
         Scanner entrada = new Scanner(System.in);
@@ -326,10 +502,10 @@ public class Menu {
         boolean fin = true;
         int contadorFalloUno = 0;
         int contadorAciertoUno = 0;
-        int barcoDestruidoUno = 10;
+        int barcoDestruidoUno = 20;
         int contadorFalloDos = 0;
         int contadorAciertoDos = 0;
-        int barcoDestruidoDos = 10;
+        int barcoDestruidoDos = 20;
         int vidaUno = uno.getVida();
         int vidaDos = dos.getVida();
 
@@ -355,7 +531,7 @@ public class Menu {
                 for (int j = yInicio; j <= yInicio; j++) {
                     if (tablero2[i][j].equals("■")) {
                         aux2[i][j] = azul + "X";
-                        System.out.println(formatear);
+                        System.out.println(formatear + " ");
                         System.out.println("¡ Ataque Realizado exitosamente !");
                         vidaUno = vidaUno + 50;
                         uno.setVida(vidaUno);
@@ -364,7 +540,7 @@ public class Menu {
                         barcoDestruidoUno--;
                     } else {
                         aux2[i][j] = rojo + "O";
-                        System.out.println(formatear);
+                        System.out.println(formatear + " ");
                         System.out.println("¡ Ataque no fue exitoso, vuelva a intentarlo !");
                         vidaUno = vidaUno - 5;
                         uno.setVida(vidaUno);
@@ -375,7 +551,8 @@ public class Menu {
             }
 
             if (barcoDestruidoUno == 0) {
-                System.out.println("¡ Felicidades " + uno + " a ganado la batalla naval !");
+                System.out.println("¡ Felicidades " + uno.getNombre() + " a ganado la batalla naval !\n");
+                uno.setEstado("Ganador");
                 fin = false;
                 break;
             }
@@ -384,17 +561,7 @@ public class Menu {
 
     }
 
-    private int validarNumero() {
-
-        Scanner entrada = new Scanner(System.in);
-
-        int dato = entrada.nextInt();
-        while (dato < 0 || dato > 26) {
-            dato = entrada.nextInt();
-        }
-        return dato;
-    }
-
+    // Metodo utilizado para limpiar el tablero cuando se envie una coordenada mala o bien este ocupada esta casilla.
     private void limpiarTablero(int xInicio, int xFinal, int yInicio, int yFinal, String[][] tablero) {
 
         for (int i = xInicio; i <= xFinal; i++) {
@@ -405,27 +572,7 @@ public class Menu {
 
     }
 
-    private void tableroDanio(String[][] tablero) {
-
-        if (tablero == null) {
-            dibujarMatriz(tablero);
-        } else {
-            System.out.print(" ");
-            for (int i = 0; i < tablero.length; i++) {
-                System.out.print((i + 1) + " ");
-            }
-
-            System.out.print("  ");
-            for (int i = 0; i < tablero.length; i++) {
-                System.out.print((char) (i + 65) + " ");
-                for (int j = 0; j < tablero.length; j++) {
-                    System.out.print(tablero[i][j] + " ");
-                }
-                System.out.println("");
-            }
-        }
-    }
-
+    // Metodo que solo ubica los barcos que el usuario ingresa.
     private void ubicarBarco(String[][] tablero) {
 
         System.out.print("  ");
@@ -444,6 +591,7 @@ public class Menu {
 
     }
 
+    // Metodo que dibuja la matriz al inicio del juego y tambien cuando estamos batallando.
     private void dibujarMatriz(String[][] tablero) {
 
         System.out.print("  ");
@@ -468,6 +616,7 @@ public class Menu {
 
     }
 
+    // Metodo utilizado para ubicar las columnas, dependiendo de la letra que se ingrese se retornara la columna en numero.
     private int caracter(String letra) {
 
         switch (letra.toUpperCase()) {
@@ -529,6 +678,7 @@ public class Menu {
         return 0;
     }
 
+    // Metodo utilizado para ubicar las filas en el tablero, enviando un numero y retornando otro.
     private int numero(int numero) {
 
         switch (numero) {
@@ -589,7 +739,8 @@ public class Menu {
         }
         return 0;
     }
-
+    
+    // Metodo que muestra los datos del estudiante.
     private void datos() {
         System.out.println("\nDiego Alejandro Juarez Bran.");
         System.out.println("201700770.");
@@ -597,6 +748,7 @@ public class Menu {
         System.out.println("Ing. Moises Velasquez.\n");
     }
 
+    // Metodo para terminar la ejecucion del programa.
     private void salir() {
         System.out.println("Gracias por jugar Batalla Naval, hasta pronto.....");
         System.exit(0);

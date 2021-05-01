@@ -16,13 +16,15 @@ public class Jugador {
     private int acierto;
     private int fallo;
     private String estado;
+    private int tamanioMatriz;
 
-    public Jugador(String nombre, int vida, int acierto, int fallo, String estado) {
+    public Jugador(String nombre, int vida, int acierto, int fallo, String estado, int tamanioMatriz) {
         this.nombre = nombre;
         this.vida = vida;
         this.acierto = acierto;
         this.fallo = fallo;
         this.estado = estado;
+        this.tamanioMatriz = tamanioMatriz;
     }
 
     public Jugador() {
@@ -31,10 +33,9 @@ public class Jugador {
         setAcierto(0);
         setFallo(0);
         setEstado("");
-                
+        setTamanioMatriz(0);
     }
 
-    
     /**
      * @return the nombre
      */
@@ -103,6 +104,20 @@ public class Jugador {
      */
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    /**
+     * @return the tamanioMatriz
+     */
+    public int getTamanioMatriz() {
+        return tamanioMatriz;
+    }
+
+    /**
+     * @param tamanioMatriz the tamanioMatriz to set
+     */
+    public void setTamanioMatriz(int tamanioMatriz) {
+        this.tamanioMatriz = tamanioMatriz;
     }
 
 }

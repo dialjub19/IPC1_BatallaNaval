@@ -19,10 +19,28 @@ public class BatallaNaval {
      */
     public static void main(String[] args) {
 
-        
-        Menu miMenu = new Menu();
-        miMenu.menuPrincipal();
-        
+        int[] nu = {1, 4, 2, 6, 8, 5, 3};
+
+        for (int i = 0; i < nu.length - 1; i++) {
+            for (int j = 0; j < nu.length - 1; j++) {
+                if (nu[j] < nu[j + 1]) {
+                    int aux = nu[j];
+                    nu[j] = nu[j + 1];
+                    nu[j + 1] = aux;
+                }
+            }
+        }
+
+        for (int i = 0; i < nu.length ; i++) {
+            System.out.print(nu[i]);
+            if (i < 3) {
+                System.out.print("*" + nu[i]);
+            }
+
+        }
+
+        // Menu miMenu = new Menu();
+        //miMenu.menuPrincipal();
         /*String[][] matriz = new String[10][10];
         Scanner entrada = new Scanner(System.in);
         String blue="\033[34m";
@@ -77,7 +95,6 @@ public class BatallaNaval {
             }
             System.out.println("");
         }*/
-
     }
 
 }
